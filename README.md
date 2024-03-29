@@ -50,6 +50,7 @@ http://127.0.0.1:5000/
 <img width="200" alt="image" src="https://github.com/bravekingzhang/react-ai-chat/assets/4476322/7c457992-a0bc-49a3-9bd6-f23b5f1a595e">
 
 关注作者微信公众号，**老码沉思录**，与作者交流。
+<img width="200" alt="image" src="https://raw.githubusercontent.com/bravekingzhang/pic_go/master/2024/03/29/1711677809867-40f26109-8ac4-45de-b8b2-cbf78ad09cff.png">
 
 
 
