@@ -1,6 +1,12 @@
 from PIL import Image, ImageDraw, ImageFont
 import jieba
 
+def textsize(text, font):
+    im = Image.new(mode="P", size=(0, 0))
+    draw = ImageDraw.Draw(im)
+    _, _, width, height = draw.textbbox((0, 0), text=text, font=font)
+    return width, height
+
 def add_text_to_image(text, image_path, text_color, background, padding=10, target_size=(640, 480), font_path="fonts/Hiragino Sans GB.ttc", font_size=16):
     # Open the image
     image = Image.open(image_path)
@@ -27,7 +33,7 @@ def add_text_to_image(text, image_path, text_color, background, padding=10, targ
     words = [char for char in jieba.cut(text)]
     current_line = words[0]
     for word in words[1:]:
-        if draw.textsize(current_line  + word, font=font)[0] <= target_size[0] - 2 * padding:
+        if textsize(current_line  + word, font=font)[0] <= target_size[0] - 2 * padding:
             current_line +=  word
         else:
             lines.append(current_line)
@@ -35,7 +41,7 @@ def add_text_to_image(text, image_path, text_color, background, padding=10, targ
     lines.append(current_line)
 
     # Calculate the height of the background rectangle based on the number of lines
-    text_height = draw.textsize(lines[0], font=font)[1]
+    text_height = textsize(lines[0], font=font)[1]
 
     if len(lines) == 1:
         box_height = text_height + padding * 2
@@ -43,11 +49,11 @@ def add_text_to_image(text, image_path, text_color, background, padding=10, targ
         box_height = (text_height + padding) * len(lines) +  padding
 
     # Calculate the position of the background rectangle
-    box_position = ((target_size[0] - draw.textsize(lines[0], font=font)
+    box_position = ((target_size[0] - textsize(lines[0], font=font)
                     [0]) // 2 - padding, target_size[1] - box_height - padding)
 
     # Calculate the width of the background rectangle
-    box_width = draw.textsize(lines[0], font=font)[0] + 2 * padding
+    box_width = textsize(lines[0], font=font)[0] + 2 * padding
 
     # Draw a rectangle with the specified background color and alpha
     draw.rectangle(
@@ -58,7 +64,7 @@ def add_text_to_image(text, image_path, text_color, background, padding=10, targ
 
     # Draw the text on the overlay image
     for line in lines:
-        text_width, text_height = draw.textsize(line, font=font)
+        text_width, text_height = textsize(line, font=font)
         text_position = ((target_size[0] - text_width) // 2, start_y)
         print(line, text_position)
         draw.text(text_position, line, font=font, fill=text_color)

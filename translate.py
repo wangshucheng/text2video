@@ -1,10 +1,10 @@
 import requests
 from langdetect import detect
 
-def translate_to_english(text):
+def translate_to_english_old(text):
     if not is_chinese(text):
         return text
-    url = "http://fanyi.youdao.com/translate?doctype=json"
+    url = "https://dict.youdao.com/keyword/key"
     params = {
         "i": text,
         "from": "auto",
@@ -18,6 +18,15 @@ def translate_to_english(text):
     else:
         return text
 
+from youdaoapi import Trans
+ 
+def translate_to_english(text):
+    if not is_chinese(text):
+        return text
+    str=text
+    result=Trans.fnayi(str)
+    print(result)
+    return result
 
 # if __name__ == "__main__":
 #     print(translate_to_english("我是中国人"))

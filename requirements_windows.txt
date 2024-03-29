@@ -1,0 +1,11 @@
+requests
+opencv-python
+pydub
+pyttsx3
+jieba
+langdetect
+flask
+Pillow
+python-dotenv
+pycryptodome
+edge-tts

@@ -204,11 +204,21 @@ def merge_audio_to_video(audio_directory, video_file, output_file):
     result = subprocess.run(command,cwd=current_directory, timeout=300)
     print(result)
 
+import chardet
+
+def check_charset(file_path):
+    with open(file_path, "rb") as f:
+        data = f.read(4)
+        charset = chardet.detect(data)['encoding']
+    return charset
+
 def get_duration_from_vtt(vtt_file):
     print(vtt_file)
     if not os.path.exists(vtt_file):
         return 0.1
-    with open(vtt_file, 'r') as file:
+    # charset = check_charset(vtt_file)
+    # print(charset)
+    with open(vtt_file, 'r', encoding="utf-8") as file:
         lines = file.readlines()
 
     total_duration = 0.1
